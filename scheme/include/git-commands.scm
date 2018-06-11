@@ -1,12 +1,14 @@
 (define status-hash (make-hash-table))
 
-(define git-status
-  (lambda ()
-    (call-with-input-pipe "git status --short --untracked ./" read-all)))
+(define (exec-system string)
+  (call-with-input-pipe string read-all))
 
-;;For staged but not committed
-;;git diff --cached --name-status  
-;; (print (hash-table->alist status-hash))
+(define (git-status)
+  (exec-system
+   "git status --short --untracked $(git rev-parse --show-toplevel)"))
+
+(define (staged-files?)
+  (not (string-null? (exec-system "git diff --cached --name-status"))))
 
 (define (process-statuses statuses) 
   (let [[step 1]] 
@@ -24,6 +26,8 @@
       ((string=? status "A")
        (print "#    New File added" " [" number "] " file))
       ((string=? status "M")
+       (print "#    Staged and Modified" " [" number "] " file))
+      ((string=? status "M ")
        (print "#    Modified" " [" number "] " file))
       ((string=? status "AM")
        (print "#    Added and Modified" " [" number "] " file))
