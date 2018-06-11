@@ -2,7 +2,7 @@
 
 (define git-status
   (lambda ()
-    (call-with-input-pipe "git status --short --untracked --porcelain" read-all)))
+    (call-with-input-pipe "git status --short --untracked ./" read-all)))
 
 ;;For staged but not committed
 ;;git diff --cached --name-status  

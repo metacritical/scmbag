@@ -7,7 +7,9 @@ REPL=rlwrap csi
 
 grab: scmbag.scm
 	$(CSC) $< 
-	cp scmbag $(OH_MY_BASH)/bin
+
+install:
+	cp scmbag /usr/local/bin/
 
 run: scmbag.scm
 	$(REPL)
