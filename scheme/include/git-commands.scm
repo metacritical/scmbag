@@ -1,7 +1,7 @@
 (define status-hash (make-hash-table))
 
-(define (exec-system string)
-  (call-with-input-pipe string read-all))
+(define (exec-system command)
+  (call-with-input-pipe command read-all))
 
 (define (git-status)
   (exec-system
@@ -18,30 +18,31 @@
 	(hash-table-set! status-hash step status-pair)
 	(set! step (+ step 1)))) statuses)))
 
-(define (print-status status-pair number)
-    (let [[status (first status-pair)] [file (last status-pair)]]
-     (cond 
-      ((string=? status "??")
-       (print "#    Untracked File" " [" number "] " file))
-      ((string=? status "A")
-       (print "#    New File added" " [" number "] " file))
-      ((string=? status "M")
-       (print "#    Staged and Modified" " [" number "] " file))
-      ((string=? status "M ")
-       (print "#    Modified" " [" number "] " file))
-      ((string=? status "AM")
-       (print "#    Added and Modified" " [" number "] " file))
-      ((string=? status "MM")
-       (print "#    Modified not Staged" " [" number "] " file))
-      ((string=? status "D")
-       (print "#    Deleted" " [" number "] " file))
-      ((string=? status "C")
-       (print "#    File Copied" " [" number "] " file))
-      ((string=? status "R")
-       (print "#    File Renamed" " [" number "] " file))
-      ((string=? status "U")
-       (print "#    Updated or Unmerged"))
-      (else (print "#    File Renamed" " [" number "] " file)))))
+(define (get-status status-pair numb)
+  (let [[status (first status-pair)] [file (last status-pair)] 
+	[number (number->string numb)]]
+    (cond 
+     ((string=? status "??")
+      (string-append "#    Untracked File" " [" number "] " file))
+     ((string=? status "A")
+      (string-append "#    New File added" " [" number "] " file))
+     ((string=? status "M")
+      (string-append "#    Staged and Modified" " [" number "] " file))
+     ((string=? status "M ")
+      (string-append "#    Modified" " [" number "] " file))
+     ((string=? status "AM")
+      (string-append "#    Added and Modified" " [" number "] " file))
+     ((string=? status "MM")
+      (string-append "#    Modified not Staged" " [" number "] " file))
+     ((string=? status "D")
+      (string-append "#    Deleted" " [" number "] " file))
+     ((string=? status "C")
+      (string-append "#    File Copied" " [" number "] " file))
+     ((string=? status "R")
+      (string-append "#    File Renamed" " [" number "] " file))
+     ((string=? status "U")
+      (string-append "#    Updated or Unmerged"))
+     (else (print "#    File Renamed" " [" number "] " file)))))
 
 (define (set-status-hash status)
   (process-statuses (string-split status "\n")))
@@ -50,7 +51,7 @@
   (set-status-hash (git-status))
   (do [[i 1 (+ i 1)]]
       ((> i (hash-table-size status-hash)) "")
-    (print-status (hash-table-ref status-hash i) i)))
+    (print (get-status (hash-table-ref status-hash i) i))))
 
 (define (add-file name)
   (system (format "git add ~S" name)))
