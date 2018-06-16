@@ -21,7 +21,7 @@
     (init-aliases))
 
    (args:make-option
-    (d diff) (required: "STATUS_NUMBER/S") "Code diff 1 3 4 .."
+    (d diff) #:none "Code diff 1 3 4 .."
     (git-diff (cdr (command-line-arguments))))
 
    (args:make-option

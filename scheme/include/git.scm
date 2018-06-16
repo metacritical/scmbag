@@ -86,7 +86,7 @@
      (add-file-from number)) file-numbers))
 
 (define (diff file-names)
-  (system (string-append "git diff " (string-join file-names " "))))
+  (system (format "git diff ~S" (string-join file-names " "))))
 
 (define (git-diff file-numbers)
   (set-status-hash (git-status))
