@@ -13,7 +13,7 @@
    (args:make-option (s status) #:none "Show Status" (show-status))
 
    (args:make-option
-    (a add) (required: "STATUS_NUMBER/S") "Add Files 1 2 3 .."
+    (a add) (required: "STAT_NUMBERS ") "Add Files 1 2 3 .."
     (add-files (cdr (command-line-arguments))))
 
    (args:make-option
@@ -23,6 +23,10 @@
    (args:make-option
     (d diff) #:none "Code diff 1 3 4 .."
     (git-diff (cdr (command-line-arguments))))
+
+   (args:make-option
+    (c commit-message) (required: "Message ") "Commit Message"
+    (commit))
 
    (args:make-option
     (h help) #:none "Display this text"
@@ -40,6 +44,6 @@
 (receive (options operands)
     (args:parse (command-line-arguments) opts) "")
 
-;;TODO add git diff : 'gd 1 2 3'  or 'gd' for complete diff. show staged file
+;;TODO show staged file
 ;; git reset 'grs 1 2 3' or 'grs' for complete reset. Also diff of staged files
-;; using gdc
+;; Add gcm (Git commit Message)

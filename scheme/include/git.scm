@@ -63,9 +63,8 @@
 (define (show-status)
   (let [[status (git-status)] [branch (current-branch)]]
     (cond
-     ((string=? status "")
-      (print 
-       (string-append "On branch: " branch " | Working directory clean")))
+     ((string-null? status)
+      (print (string-append "On branch: " branch " | Working directory clean")))
      (else
       (set-status-hash status)
       (do [[i 1 (+ i 1)]]
@@ -91,3 +90,8 @@
 (define (git-diff file-numbers)
   (set-status-hash (git-status))
   (print (diff (map get-file-name file-numbers))))
+
+(define (commit)
+  (display "Commit Message: ")
+  (let [[input (read-line)]]
+   (system (format "git commit -m ~S" message))))
