@@ -44,14 +44,17 @@
       (string-append "#    Updated or Unmerged"))
      (else (print "#    File Renamed" " [" number "] " file)))))
 
+(define (current-branch)
+  (system "git rev-parse --abbrev-ref HEAD"))
+
 (define (set-status-hash status)
   (process-statuses (string-split status "\n")))
 
 (define (show-status)
-  (let [[status (git-status)]]
+  (let [[status (git-status)] [branch (current-branch)]]
     (cond
      ((string=? status "")
-      (print "On branch: master | No Changes (workign directory clean)"))
+      (print "On branch: " current-branch "Working directory Clean"))
      (else
       (set-status-hash status)
       (do [[i 1 (+ i 1)]]
