@@ -5,13 +5,16 @@
 (use posix)
 (use args)
 (use scsh-process)
-(include "include/git-commands.scm")
+(include "include/git.scm")
+(include "include/init.scm")
 
 (define opts
   (list (args:make-option (s status)    #:none     "Show Status"
                           (show-status))
 	(args:make-option (a add)    (required: "STATUS_NUMBERS") "Add Files"
                           (add-files (cdr (command-line-arguments))))
+	(args:make-option (i install)      #:none     "Create aliases and source into ~/.bash_profile"
+			  (init-aliases))
         (args:make-option (h help)      #:none     "Display this text"
                           (usage))))
 
