@@ -45,7 +45,10 @@
      (else (print "#    File Renamed" " [" number "] " file)))))
 
 (define (current-branch)
-  (first (string-split (exec-system "git rev-parse --abbrev-ref HEAD") "\n")))
+  (let  [[branch (exec-system "git rev-parse --abbrev-ref HEAD")]]
+    (cond
+     ((string=? branch "") "")
+     (else (first (string-split branch "\n"))))))
 
 (define (set-status-hash status)
   (process-statuses (string-split status "\n")))
@@ -55,7 +58,7 @@
     (cond
      ((string=? status "")
       (print 
-       (string-append "On branch: " (first branch) " | Working directory clean")))
+       (string-append "On branch: " branch " | Working directory clean")))
      (else
       (set-status-hash status)
       (do [[i 1 (+ i 1)]]
