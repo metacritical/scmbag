@@ -27,8 +27,6 @@
      ((string=? status "A")
       (string-append "#    New File added" " [" number "] " file))
      ((string=? status "M")
-      (string-append "#    Staged and Modified" " [" number "] " file))
-     ((string=? status "M ")
       (string-append "#    Modified" " [" number "] " file))
      ((string=? status "AM")
       (string-append "#    Added and Modified" " [" number "] " file))
@@ -47,7 +45,7 @@
 (define (current-branch)
   (let  [[branch (exec-system "git rev-parse --abbrev-ref HEAD")]]
     (cond
-     ((string=? branch "") "")
+     ((string-null? branch) "")
      (else (first (string-split branch "\n"))))))
 
 (define (set-status-hash status)

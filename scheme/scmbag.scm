@@ -9,14 +9,20 @@
 (include "include/init.scm")
 
 (define opts
-  (list (args:make-option (s status)    #:none     "Show Status"
-                          (show-status))
-	(args:make-option (a add)    (required: "STATUS_NUMBERS") "Add Files"
-                          (add-files (cdr (command-line-arguments))))
-	(args:make-option (i install)      #:none     "Create aliases and source into ~/.bash_profile"
-			  (init-aliases))
-        (args:make-option (h help)      #:none     "Display this text"
-                          (usage))))
+  (list
+   (args:make-option (s status) #:none "Show Status" (show-status))
+
+   (args:make-option
+    (a add) (required: "STATUS_NUMBERS") "Add Files"
+    (add-files (cdr (command-line-arguments))))
+
+   (args:make-option
+    (i install) #:none "Create aliases and source into ~/.bash_profile"
+    (init-aliases))
+
+   (args:make-option
+    (h help) #:none "Display this text"
+    (usage))))
 
 (define (usage)
   (with-output-to-port (current-error-port)
@@ -29,3 +35,7 @@
 
 (receive (options operands)
     (args:parse (command-line-arguments) opts) "")
+
+;;TODO add git diff : 'gd 1 2 3'  or 'gd' for complete diff. show staged file
+;; git reset 'grs 1 2 3' or 'grs' for complete reset. Also diff of staged files
+;; using gdc
