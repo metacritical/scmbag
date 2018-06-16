@@ -51,10 +51,10 @@
   (process-statuses (string-split status "\n")))
 
 (define (show-status)
-  (let [[status (git-status)] [branch (current-branch)]]
+  (let [[status (git-status)] [branch (string-split (current-branch) "\n")]]
     (cond
      ((string=? status "")
-      (print (string-append "On branch: " branch "Working directory Clean")))
+      (print (string-append "On branch: " (first branch) "Working directory Clean")))
      (else
       (set-status-hash status)
       (do [[i 1 (+ i 1)]]
