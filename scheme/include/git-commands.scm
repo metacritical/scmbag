@@ -48,10 +48,15 @@
   (process-statuses (string-split status "\n")))
 
 (define (show-status)
-  (set-status-hash (git-status))
-  (do [[i 1 (+ i 1)]]
-      ((> i (hash-table-size status-hash)) "")
-    (print (get-status (hash-table-ref status-hash i) i))))
+  (let [[status (git-status)]]
+    (cond
+     ((string=? status "")
+      (print "On branch: master | No Changes (workign directory clean)"))
+     (else
+      (set-status-hash status)
+      (do [[i 1 (+ i 1)]]
+	  ((> i (hash-table-size status-hash)) "")
+	 (print (get-status (hash-table-ref status-hash i) i)))))))
 
 (define (add-file name)
   (system (format "git add ~S" name)))
