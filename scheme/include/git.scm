@@ -93,5 +93,5 @@
 
 (define (commit)
   (display "Commit Message: ")
-  (let [[input (read-line)]]
+  (let [[message (read-line)]]
    (system (format "git commit -m ~S" message))))

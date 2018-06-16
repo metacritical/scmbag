@@ -4,7 +4,10 @@
 alias gs='scmbag -s'
 alias ga='scmbag -a'
 alias gd='scmbag -d'
-alias gps='git push'\" > ~/.scmbag")
+alias gps='git push'
+alias gdc='git diff --cached'
+alias gc='git commit'
+alias gcm='scmbag -m'\" > ~/.scmbag")
   ;; Append aliases to bash profile.
   (system "echo \"
 #SCMBAG

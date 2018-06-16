@@ -25,7 +25,7 @@
     (git-diff (cdr (command-line-arguments))))
 
    (args:make-option
-    (c commit-message) (required: "Message ") "Commit Message"
+    (c commit-message) #:none "Commit Message"
     (commit))
 
    (args:make-option
