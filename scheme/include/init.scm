@@ -3,7 +3,8 @@
   (system "echo \"#SCMBAG aliases
 alias gs='scmbag -s'
 alias ga='scmbag -a'
-alias gd='git diff'\" > ~/.scmbag")
+alias gd='scmbag -d'
+alias gps='git push'\" > ~/.scmbag")
   ;; Append aliases to bash profile.
   (system "echo \"
 #SCMBAG
