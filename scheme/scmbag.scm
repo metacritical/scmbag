@@ -13,12 +13,16 @@
    (args:make-option (s status) #:none "Show Status" (show-status))
 
    (args:make-option
-    (a add) (required: "STATUS_NUMBERS") "Add Files"
+    (a add) (required: "STATUS_NUMBER/S") "Add Files 1 2 3 .."
     (add-files (cdr (command-line-arguments))))
 
    (args:make-option
     (i install) #:none "Create aliases and source into ~/.bash_profile"
     (init-aliases))
+
+   (args:make-option
+    (d diff) (required: "STATUS_NUMBER/S") "Code diff 1 3 4 .."
+    (git-diff (cdr (command-line-arguments))))
 
    (args:make-option
     (h help) #:none "Display this text"

@@ -10,6 +10,15 @@
 (define (staged-files?)
   (not (string-null? (exec-system "git diff --cached --name-status"))))
 
+(define (get-file-status-and-name number)
+  (hash-table-ref status-hash (string->number number)))
+
+(define (get-file-status number)
+  (first (get-file-status-and-name number)))
+
+(define (get-file-name number)
+  (last (get-file-status-and-name number)))
+
 (define (process-statuses statuses) 
   (let [[step 1]] 
     (for-each 
@@ -67,7 +76,7 @@
   (system (format "git add ~S" name)))
 
 (define (add-file-from number)
-  (let [[file (last (hash-table-ref status-hash (string->number number)))]]
+  (let [[file (get-file-name number)]]
     (add-file file)))
 
 (define (add-files file-numbers)
@@ -75,3 +84,10 @@
   (for-each 
    (lambda [number]
      (add-file-from number)) file-numbers))
+
+(define (diff file-names)
+  (system (string-append "git diff " (string-join file-names " "))))
+
+(define (git-diff file-numbers)
+  (set-status-hash (git-status))
+  (print (diff (map get-file-name file-numbers))))
