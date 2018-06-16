@@ -54,7 +54,7 @@
   (let [[status (git-status)] [branch (current-branch)]]
     (cond
      ((string=? status "")
-      (print "On branch: " current-branch "Working directory Clean"))
+      (print "On branch: " branch "Working directory Clean"))
      (else
       (set-status-hash status)
       (do [[i 1 (+ i 1)]]
