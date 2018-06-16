@@ -45,9 +45,7 @@
      (else (print "#    File Renamed" " [" number "] " file)))))
 
 (define (current-branch)
-  (first
-   (string-split
-    (exec-system "git rev-parse --abbrev-ref HEAD") "\n")))
+  (first (string-split (exec-system "git rev-parse --abbrev-ref HEAD") "\n")))
 
 (define (set-status-hash status)
   (process-statuses (string-split status "\n")))
