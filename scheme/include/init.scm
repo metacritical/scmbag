@@ -9,7 +9,8 @@ alias gdc='git diff --cached'
 alias gc='git commit'
 alias gcm='scmbag -c'
 alias gl='git log --graph'
-alias glg='git log --graph --decorate --oneline'\" > ~/.scmbag")
+alias glg='git log --graph --decorate --oneline'
+alias gco='scmbag -o\" > ~/.scmbag")
   ;; Append aliases to bash profile.
   (system "echo \"
 #SCMBAG
