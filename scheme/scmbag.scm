@@ -44,10 +44,7 @@
       (print (args:usage opts))))
   (exit 1))
 
-
 (receive (options operands)
     (args:parse (command-line-arguments) opts) "")
 
 ;;TODO show staged file
-;; git reset 'grs 1 2 3' or 'grs' for complete reset. Also diff of staged files
-;; Add gcm (Git commit Message)

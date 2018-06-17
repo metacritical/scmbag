@@ -88,8 +88,11 @@
   (system (format "git diff ~S" (string-join file-names " "))))
 
 (define (git-diff file-numbers)
-  (set-status-hash (git-status))
-  (print (diff (map get-file-name file-numbers))))
+  (cond
+   ((null? file-numbers) (diff file-numbers))
+   (else
+    (set-status-hash (git-status))
+    (print (diff (map get-file-name file-numbers))))))
 
 (define (commit)
   (display "Commit Message: ")
