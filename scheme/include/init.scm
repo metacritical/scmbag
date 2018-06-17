@@ -17,13 +17,12 @@ alias gco='scmbag -co'\" > ~/.scmbag")
 then
 echo \"Aliases already sourced into ~/.bash_profile\n\"
 else
+printf \"#SCMBAG
+source ~/.scmbag appended into .bash_profile\"
 echo \"
 #SCMBAG
 source ~/.scmbag\" >> ~/.bash_profile
-printf \"#SCMBAG
-source ~/.scmbag appended into .bash_profile\"
 fi")
 
   ;;Prints required action.
-(print "SCMBAG alias appended to ~/.bash_profile.
-execute: 'source ~/.bash_profile'"))
+(print "execute: 'source ~/.bash_profile'"))
