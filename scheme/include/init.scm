@@ -9,14 +9,21 @@ alias gdc='git diff --cached'
 alias gc='git commit'
 alias gcm='scmbag -c'
 alias gl='git log --graph'
-alias glg='git log --graph --decorate --oneline'
-alias gco='scmbag -co
-alias gg='git log --graph --full-history --all --color --pretty=format:\"tree\" > ~/.scmbag')
-  ;; Append aliases to bash profile.
-  (system "echo \"
+alias gg='git log --graph --decorate --oneline'
+alias gco='scmbag -co'\" > ~/.scmbag")
+
+;; Append aliases to bash profile.
+  (system "if grep -Fxq '#SCMBAG' ~/.bash_profile
+then
+echo \"Aliases already sourced into ~/.bash_profile\n\"
+else
+echo \"
 #SCMBAG
-source ~/.scmbag\" >> ~/.bash_profile")
+source ~/.scmbag\" >> ~/.bash_profile
+printf \"#SCMBAG
+source ~/.scmbag appended into .bash_profile\"
+fi")
 
   ;;Prints required action.
 (print "SCMBAG alias appended to ~/.bash_profile.
-execute: 'source ~/.bash_profile'")
+execute: 'source ~/.bash_profile'"))
