@@ -95,3 +95,14 @@
   (display "Commit Message: ")
   (let [[message (read-line)]]
    (system (format "git commit -m ~S" message))))
+
+(define (grs file-names)
+  (let [[files (string-join file-names " ")]]
+    (cond
+     ((string-null? files) (system "git reset ."))
+     (else
+      (system (string-append "git reset " files))))))
+
+(define (git-reset file-numbers)
+  (set-status-hash (git-status))
+  (grs (map get-file-name file-numbers)))

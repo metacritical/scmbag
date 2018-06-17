@@ -21,12 +21,16 @@
     (init-aliases))
 
    (args:make-option
-    (d diff) #:none "Code diff 1 3 4 .."
+    (d diff) #:none "Git diff 1 3 4 .."
     (git-diff (cdr (command-line-arguments))))
 
    (args:make-option
-    (c co commit-message) #:none "Commit with message."
+    (c co commit-msg) #:none "Commit with message."
     (commit))
+
+   (args:make-option
+    (r reset) #:none "Git reset 1 3 4 .."
+    (git-reset (cdr (command-line-arguments))))
 
    (args:make-option
     (h help) #:none "Display this text"
