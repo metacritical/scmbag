@@ -1,5 +1,5 @@
 (define (init-aliases)
-  ;;Add aliases to ~/.scmbag
+;;Add aliases to ~/.scmbag
   (system "echo \"#SCMBAG aliases
 alias gs='scmbag -s'
 alias ga='scmbag -a'
@@ -10,7 +10,9 @@ alias gc='git commit'
 alias gcm='scmbag -c'
 alias gl='git log --graph'
 alias gg='git log --graph --decorate --oneline'
-alias grs='scmbag -r'\" > ~/.scmbag")
+alias grs='scmbag -r'
+alias gb='scmbag -b'
+alias gco='scmbag -co'\" > ~/.scmbag")
 
 ;; Append aliases to bash profile.
   (system "if grep -Fxq '#SCMBAG' ~/.bash_profile
@@ -24,5 +26,5 @@ echo \"
 source ~/.scmbag\" >> ~/.bash_profile
 fi")
 
-  ;;Prints required action.
+;;Prints required action.
 (print "Run:\n $ source ~/.bash_profile"))

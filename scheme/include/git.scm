@@ -5,7 +5,7 @@
 
 (define (git-status)
   (exec-system
-   "git status --short --untracked $(git rev-parse --show-toplevel)"))
+   "git status --short --untracked"))
 
 (define (staged-files?)
   (not (string-null? (exec-system "git diff --cached --name-status"))))
@@ -14,48 +14,43 @@
   (hash-table-ref status-hash (string->number number)))
 
 (define (get-file-status number)
-  (first (get-file-status-and-name number)))
+  (car (get-file-status-and-name number)))
 
 (define (get-file-name number)
-  (last (get-file-status-and-name number)))
+  (cdr (get-file-status-and-name number)))
 
 (define (process-statuses statuses) 
   (let [[step 1]] 
     (for-each 
      (lambda [file-status]
-       (let [[status-pair (string-split file-status " ")]]
-	(hash-table-set! status-hash step status-pair)
+       (let [[statcol (substring file-status 0 2)]
+	     [file (substring file-status 3 (string-length file-status))]]
+	(hash-table-set! status-hash step (cons statcol file))
 	(set! step (+ step 1)))) statuses)))
 
 (define (get-status status-pair numb)
-  (let [[status (first status-pair)] [file (last status-pair)] 
+  (let [[status (car status-pair)] [file (cdr status-pair)] 
 	[number (number->string numb)]]
     (cond 
      ((string=? status "??")
       (string-append "#    Untracked File" " [" number "] " file))
      ((string=? status "A")
       (string-append "#    New File added" " [" number "] " file))
-     ((string=? status "M")
-      (string-append "#    Modified" " [" number "] " file))
-     ((string=? status "AM")
-      (string-append "#    Added and Modified" " [" number "] " file))
+     ((string=? status " M")
+      (string-append "#    Modified and unstaged" " [" number "] " file))
+     ((string=? status "M ")
+      (string-append "#    Staged" " [" number "] " file))
      ((string=? status "MM")
-      (string-append "#    Modified not Staged" " [" number "] " file))
+      (string-append "#    Staged and Modified" " [" number "] " file))
      ((string=? status "D")
       (string-append "#    Deleted" " [" number "] " file))
      ((string=? status "C")
       (string-append "#    File Copied" " [" number "] " file))
-     ((string=? status "R")
+     ((string=? status "RM")
       (string-append "#    File Renamed" " [" number "] " file))
      ((string=? status "U")
       (string-append "#    Updated or Unmerged"))
-     (else (print "#    File Renamed" " [" number "] " file)))))
-
-(define (current-branch)
-  (let  [[branch (exec-system "git rev-parse --abbrev-ref HEAD")]]
-    (cond
-     ((string-null? branch) "")
-     (else (first (string-split branch "\n"))))))
+     (else (string-append "#    File Renamed" " [" number "] " file)))))
 
 (define (set-status-hash status)
   (process-statuses (string-split status "\n")))
@@ -69,7 +64,7 @@
       (set-status-hash status)
       (do [[i 1 (+ i 1)]]
 	  ((> i (hash-table-size status-hash)) "")
-	 (print (get-status (hash-table-ref status-hash i) i)))))))
+	(print (get-status (hash-table-ref status-hash i) i)))))))
 
 (define (add-file name)
   (system (format "git add ~S" name)))
@@ -109,3 +104,9 @@
 (define (git-reset file-numbers)
   (set-status-hash (git-status))
   (unstage (map get-file-name file-numbers)))
+
+(define (current-branch)
+  (let  [[branch (exec-system "git rev-parse --abbrev-ref HEAD")]]
+    (cond
+     ((string-null? branch) "")
+     (else (first (string-split branch "\n"))))))

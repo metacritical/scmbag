@@ -10,7 +10,9 @@
 
 (define opts
   (list
-   (args:make-option (s status) #:none "Show Status" (show-status))
+   (args:make-option
+    (s status) #:none "Show Status"
+    (show-status))
 
    (args:make-option
     (a add) (required: "STAT_NUMBERS ") "Add Files 1 2 3 .."
@@ -48,3 +50,8 @@
     (args:parse (command-line-arguments) opts) "")
 
 ;;TODO show staged file
+;; Ability to specify files status in range 1-4 2-3 4-6
+;; Git branch using gb, Git checkout using gco 1, 2 3
+;; Git branch gb shows all numbered branches and if given a
+;; option i.e 'gb new_branch' should create a new branch.
+;; Git checkout branch gcb using [branch number] i.e 1 , 2 ...
