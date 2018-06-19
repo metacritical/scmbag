@@ -15,7 +15,7 @@
     (show-status))
 
    (args:make-option
-    (a add) (required: "STAT_NUMBERS ") "Add Files 1 2 3 .."
+    (a add) (required: "NUMBERS ") "Add Files 1 2 3 .."
     (add-files (cdr (command-line-arguments))))
 
    (args:make-option
@@ -35,11 +35,11 @@
     (git-reset (cdr (command-line-arguments))))
 
    (args:make-option
-    (o checkout) (required: "STAT_NUMBERS") "Git checkout .."
+    (o checkout) (required: "NUMBERS")     "Git checkout .."
     (git-checkout (cdr (command-line-arguments))))
 
    (args:make-option
-    (x rm-file) (required: "STAT_NUMBERS") "Delete (rm) files .."
+    (x rm-file) (required: "NUMBERS")      "Delete (rm) files 1 2 3 .."
     (rm-files (cdr (command-line-arguments))))
 
    (args:make-option
@@ -62,4 +62,4 @@
 ;; Git branch using gb, Git checkout using gco 1, 2 3
 ;; Git branch gb shows all numbered branches and if given a
 ;; option i.e 'gb new_branch' should create a new branch.
-;; Git checkout branch gcb using [branch number] i.e 1 , 2 ...
+;; Git checkout/switch to a  branch gcb using [branch number] i.e 1 , 2 ...
