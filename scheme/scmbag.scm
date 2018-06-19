@@ -35,6 +35,10 @@
     (git-reset (cdr (command-line-arguments))))
 
    (args:make-option
+    (o checkout) (required: "STAT_NUMBERS") "Git checkout .."
+    (git-checkout (cdr (command-line-arguments))))
+
+   (args:make-option
     (h help) #:none "Display this text"
     (usage))))
 

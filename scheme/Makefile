@@ -9,7 +9,7 @@ grab: compile install
 compile: scmbag.scm
 	@echo "Compiling scmbag"
 	$(CSC) $< 
-	@echo
+	@scmbag -i
 
 install:
 	@echo "Installing scmbag"

@@ -110,3 +110,11 @@
     (cond
      ((string-null? branch) "")
      (else (first (string-split branch "\n"))))))
+
+(define (checkout file)
+  (system (format "git checkout ~S" file)))
+
+(define (git-checkout numbers)
+  (set-status-hash (git-status))
+  (let [[file-list (map get-file-name numbers)]]
+    (checkout (string-join file-list " "))))
