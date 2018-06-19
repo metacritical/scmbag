@@ -39,6 +39,10 @@
     (git-checkout (cdr (command-line-arguments))))
 
    (args:make-option
+    (x rm-file) (required: "STAT_NUMBERS") "Delete (rm) files .."
+    (rm-files (cdr (command-line-arguments))))
+
+   (args:make-option
     (h help) #:none "Display this text"
     (usage))))
 

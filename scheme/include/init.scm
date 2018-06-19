@@ -12,7 +12,8 @@ alias gl='git log --graph'
 alias gg='git log --graph --decorate --oneline'
 alias grs='scmbag -r'
 alias gb='scmbag -b'
-alias gco='scmbag -o'\" > ~/.scmbag")
+alias gco='scmbag -o'
+alias rm='scmbag -x'\" > ~/.scmbag")
 
 ;; Append aliases to bash profile.
   (system "if grep -Fxq '#SCMBAG' ~/.bash_profile
