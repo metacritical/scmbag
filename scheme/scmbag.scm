@@ -1,4 +1,4 @@
-(require-library extras ports data-structures srfi-13)
+(require-library extras ports data-structures srfi-13 files)
 (import (only extras printf))
 (import (only ports with-output-to-port))
 (import (only data-structures alist-ref string-split))
@@ -39,7 +39,7 @@
     (git-checkout (cdr (command-line-arguments))))
 
    (args:make-option
-    (x rm-file) (required: "NUMBERS")      "Delete (rm) files 1 2 3 .."
+    (x rm) (required: "NUMBERS")      "Delete (rm) files 1 2 3 .."
     (rm-files (cdr (command-line-arguments))))
 
    (args:make-option

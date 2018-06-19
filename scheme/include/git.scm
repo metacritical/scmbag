@@ -119,14 +119,11 @@
   (let [[file-list (map get-file-name numbers)]]
     (checkout (string-join file-list " "))))
 
-(define (rm files)
-  (system (format "rm ~S" files)))
-
 (define (rm-files numbers)
   (display "Are you sure you want to delete files [Y/n] ? : ")
-  (let [[del (read-line)]]
-    (if (string=? "Y" del)
-	((set-status-hash (git-status))
-	 (let [[file-list (map get-file-name numbers)]]
-	   (rm (string-join file-list " "))))
-	"")))
+  (let [[reader (read-line)]]
+    (cond
+     ((string=? reader "Y")
+      (set-status-hash (git-status))
+      (let [[file-list (map get-file-name numbers)]]
+	(map delete-file* file-list))))))
