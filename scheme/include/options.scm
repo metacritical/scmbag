@@ -51,6 +51,8 @@
   '(("??" :untracked)
     (" M" :modified :unstaged)
     ("M " :modified :staged)
+    (" D" :deleted :unstaged)
+    ("D " :deleted :staged)
     ("MM" :modified-after-staging "<= commit or stage it again.")))
 
 (define (find-msg-list status)
