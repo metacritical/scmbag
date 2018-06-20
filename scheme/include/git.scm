@@ -29,28 +29,8 @@
 	(set! step (+ step 1)))) statuses)))
 
 (define (get-status status-pair numb)
-  (let [[status (car status-pair)] [file (cdr status-pair)] 
-	[number (number->string numb)]]
-    (cond 
-     ((string=? status "??")
-      (string-append "#    Untracked File" " [" number "] " file))
-     ((string=? status "A")
-      (string-append "#    New File added" " [" number "] " file))
-     ((string=? status " M")
-      (string-append "#    Modified and unstaged" " [" number "] " file))
-     ((string=? status "M ")
-      (string-append "#    Staged" " [" number "] " file))
-     ((string=? status "MM")
-      (string-append "#    Staged and Modified" " [" number "] " file))
-     ((string=? status "D")
-      (string-append "#    Deleted" " [" number "] " file))
-     ((string=? status "C")
-      (string-append "#    File Copied" " [" number "] " file))
-     ((string=? status "RM")
-      (string-append "#    File Renamed" " [" number "] " file))
-     ((string=? status "U")
-      (string-append "#    Updated or Unmerged"))
-     (else (string-append "#    File Renamed" " [" number "] " file)))))
+  (let [[number (number->string numb)]]
+    (get-status-msg status-pair number)))
 
 (define (set-status-hash status)
   (process-statuses (string-split status "\n")))
