@@ -1,11 +1,29 @@
 (define status-hash (make-hash-table))
 
+(define sorted-status (make-hash-table))
+
+(define staged (make-queue))
+
+(define unstaged (make-queue))
+
+(define untracked (make-queue))
+
+(hash-table-set! sorted-status ':staged staged)
+(hash-table-set! sorted-status ':unstaged unstaged)
+(hash-table-set! sorted-status ':untracked untracked)
+
 (define (exec-system command)
   (call-with-input-pipe command read-all))
 
 (define (git-status)
   (exec-system
    "git status --short --untracked"))
+
+(define (current-branch)
+  (let  [[branch (exec-system "git rev-parse --abbrev-ref HEAD")]]
+    (cond
+     ((string-null? branch) "")
+     (else (first (string-split branch "\n"))))))
 
 (define (staged-files?)
   (not (string-null? (exec-system "git diff --cached --name-status"))))
@@ -28,36 +46,57 @@
 	(hash-table-set! status-hash step (cons statcol file))
 	(set! step (+ step 1)))) statuses)))
 
-(define (get-status status-pair numb)
-  (let [[number (number->string numb)]]
-    (get-status-msg status-pair number)))
-
 (define (set-status-hash status)
   (process-statuses (string-split status "\n")))
 
-(define (show-status)
-  (let [[status (git-status)] [branch (current-branch)]]
+(define (sort-status status-pair numb)
+  (let [[status (car status-pair)] [file (cdr status-pair)] 
+	[number (number->string numb)]]
+    (let [[msg-list (find-alist status status-list)]]
+      (cond
+       ((list? msg-list) (status-seperator number msg-list file))
+       (else (list status number file))))))
+
+(define (status-seperator number msg-list file)
+  (let [[stat-pair (cons number file)]]
     (cond
-     ((string-null? status)
-      (print (string-append "On branch: " branch " | Working directory clean")))
+     ((eq? (last msg-list) ':staged) (queue-add! staged stat-pair))
+     ((eq? (last msg-list) ':unstaged) (queue-add! unstaged stat-pair))
+     ((eq? (last msg-list) ':untracked) (queue-add! untracked stat-pair))
+     ((eq? (last msg-list) ':mod-staged) (queue-add! staged stat-pair)))))
+
+(define (show-status-files sym)
+  (let [[que (hash-table-ref sorted-status sym)]]
+    (print (queue->list que))))
+
+(define (branch-status msg)
+  (print (string-append "# On branch: " (current-branch) " | " msg)))
+
+(define (print-statuses) 
+  (let [[msg (number->string (hash-table-size status-hash))]]
+    (branch-status (color ':mod-staged (string-append "[+"msg"]")))
+    (show-status-files ':staged)
+    (show-status-files ':unstaged)
+    (show-status-files ':untracked)))
+
+(define (show-status)
+  (let [[status (git-status)]]
+    (cond
+     ((string-null? status) (branch-status "Working directory clean"))
      (else
       (set-status-hash status)
-      (do [[i 1 (+ i 1)]]
-	  ((> i (hash-table-size status-hash)) "")
-	(print (get-status (hash-table-ref status-hash i) i)))))))
+      (hash-table-walk status-hash (lambda (numb pair) (sort-status pair numb)))
+      (print-statuses)))))
 
 (define (add-file name)
   (system (format "git add ~S" name)))
-
-(define (add-file-from number)
-  (let [[file (get-file-name number)]]
-    (add-file file)))
 
 (define (add-files file-numbers)
   (set-status-hash (git-status))
   (for-each 
    (lambda [number]
-     (add-file-from number)) file-numbers))
+     (let [[file (get-file-name number)]]
+      (add-file file))) file-numbers))
 
 (define (diff file-names)
   (system (format "git diff ~S" (string-join file-names " "))))
@@ -85,12 +124,6 @@
   (set-status-hash (git-status))
   (unstage (map get-file-name file-numbers)))
 
-(define (current-branch)
-  (let  [[branch (exec-system "git rev-parse --abbrev-ref HEAD")]]
-    (cond
-     ((string-null? branch) "")
-     (else (first (string-split branch "\n"))))))
-
 (define (checkout file)
   (system (format "git checkout ~S" file)))
 
@@ -107,3 +140,7 @@
       (set-status-hash (git-status))
       (let [[file-list (map get-file-name numbers)]]
 	(map delete-file* file-list))))))
+
+(define (commit-all)
+  (add-files (hash-table-keys status-hash))
+  (commit))
