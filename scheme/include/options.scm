@@ -92,15 +92,9 @@
     ("R " \ \ renamed :staged)
     ("MM" mod-staged :mod-staged)))
 
-;;TODO show staged file
-;; Seperate status as separate staged, unstaged and untracked files. with
-;; colored outputs. as Folows :
-;; # Changes to be committed
-;; # Changes Not Staged for commit.
-;; # Untracked files
-;; gcma , scmbag -m (All and Git commit All files)
+;;TODO 
 ;; Ability to specify files status in range 1-4 2-3 4-6
-;; Git branch using gb, Git checkout using gco 1, 2 3
+;; Git branch using gb
 ;; Git branch gb shows all numbered branches and if given a
 ;; option i.e 'gb new_branch' should create a new branch.
 ;; Git checkout/switch to a  branch gcb using [branch number] i.e 1 , 2 ...
