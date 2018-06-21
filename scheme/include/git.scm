@@ -67,7 +67,7 @@
 
 (define (process-queue queue sym)
   (let [[qlist (reverse (queue->list queue))]]
-    (map 
+    (map
      (lambda [item]
        (let [[status (symbol->string (first (cdaddr item)))]
 	     [number (car item)]

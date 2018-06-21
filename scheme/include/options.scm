@@ -73,7 +73,7 @@
     (last header)))
 
 (define (mod-stat status)
-  (cond 
+  (cond
    ((string=? "mod-staged" status) " <= Re-stage or commit this file")
    (else "")))
 
