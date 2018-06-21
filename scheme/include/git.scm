@@ -123,7 +123,8 @@
   (for-each 
    (lambda [number]
      (let [[file (get-file-name number)]]
-      (add-file file))) file-numbers))
+      (add-file file))) file-numbers)
+  (show-status))
 
 (define (diff file-names)
   (system (format "git diff ~S" (string-join file-names " "))))
