@@ -65,6 +65,20 @@
      ((eq? (last msg-list) ':untracked) (queue-add! untracked stat-pair))
      ((eq? (last msg-list) ':mod-staged) (queue-add! staged stat-pair)))))
 
+(define (process-queue queue sym)
+  (let [[qlist (reverse (queue->list queue))]]
+    (map 
+     (lambda [item]
+       (let [[status (symbol->string (first (cdaddr item)))]
+	     [number (car item)]
+	     [file (color sym (cadr item))]
+	     [lbrace (color ':line-sep " [")]
+	     [rbrace (color ':line-sep "] ")]]
+	 (let [[msg (mod-stat status)]
+	       [stat (colorify status sym)]]
+	   (string-append stat ": " lbrace number rbrace file msg)))) qlist)))
+
+
 (define (show-status-files sym)
   (let [[queue (hash-table-ref sorted-status sym)]]
     (if (queue-empty? queue)
@@ -75,9 +89,9 @@
 	  (for-each
 	   (lambda [file] 
 	     (begin
-	       (print (color sym line-seperator) file)
-	       (print (color sym line-seperator))))
-	   (queue->list queue))))))
+	       (print (color sym line-seperator) file)))
+	   (process-queue queue sym))
+	  (print (color sym line-seperator))))))
 
 (define (branch-status count)
   (print (string-append  
@@ -98,7 +112,7 @@
      ((string-null? status) (branch-status "Working directory clean"))
      (else
       (set-status-hash status)
-      (hash-table-walk status-hash (lambda (numb pair) (sort-status pair numb)))
+      (hash-table-walk status-hash (lambda [numb pair] (sort-status pair numb)))
       (print-statuses)))))
 
 (define (add-file name)

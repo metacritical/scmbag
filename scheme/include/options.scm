@@ -72,15 +72,25 @@
   (let [[header (find-alist sym header-msg)]]
     (last header)))
 
+(define (mod-stat status)
+  (cond 
+   ((string=? "mod-staged" status) " <= Re-stage or commit this file")
+   (else "")))
+
+(define (colorify stat sym)
+  (cond
+   ((string=? "   deleted" stat) (color ':deleted stat))
+   (else (color sym stat))))
+
 
 (define status-list
-  '(("??" :untracked)
-    (" M" :modified :unstaged)
-    ("M " :modified :staged)
-    (" D" :deleted :unstaged)
-    ("D " :deleted :staged)
-    ("R " :renamed :staged)
-    ("MM" :stage-again :mod-staged)))
+  '(("??" \ untracked :untracked)
+    (" M" \ \ modified :unstaged)
+    ("M " \ \ modified :staged)
+    (" D" \ \ \ deleted :unstaged)
+    ("D " \ \ \ deleted :staged)
+    ("R " \ \ renamed :staged)
+    ("MM" mod-staged :mod-staged)))
 
 ;;TODO show staged file
 ;; Seperate status as separate staged, unstaged and untracked files. with
