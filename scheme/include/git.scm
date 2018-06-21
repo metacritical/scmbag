@@ -96,7 +96,7 @@
 (define (branch-status count)
   (print (string-append  
 	  (color ':line-sep line-seperator) 
-	  "On branch: " (current-branch) " | " count "\n")))
+	  "On branch: " (current-branch) " | " count)))
 
 (define (print-statuses) 
   (let [[count (hash-table-size status-hash)]]
