@@ -101,3 +101,7 @@
 ;; make rm a general purpose command not just git status
 ;; and make rm work with ls (File list) not gs (Git file list)
 ;; Add a grm (git rm functionality.
+;; rm should be configurable through RM_CONFIRM=true or false or 0 /1 
+;; if yes only then the confirm dialogue should appear other wise it
+;; it shuould directly delete the specified file.
+
