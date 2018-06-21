@@ -49,7 +49,8 @@
    (:tail "m")
    (:staged "33m")
    (:deleted "31m")
-   (:modified "32m")
+   (:line-sep "37m")
+   (:unstaged "32m")
    (:untracked "36m")
    (:mod-staged "35m")))
 
@@ -57,9 +58,20 @@
   (last (find-alist sym color-defs)))
 
 (define (color name msg)
-  (string-append (get-color ':esc)(get-color ':sep)(get-color name)
-		 msg
-		 (get-color ':esc)(get-color ':tail)))
+  (string-append (get-color ':esc)(get-color ':sep)(get-color name) msg
+   (get-color ':esc)(get-color ':tail)))
+
+(define line-seperator "#       ")
+
+(define header-msg
+  '((:staged "▶  Changes to be committed")
+    (:unstaged "▶  Changes not staged for commit")
+    (:untracked "▶  Untracked files")))
+
+(define (get-header-msg sym)
+  (let [[header (find-alist sym header-msg)]]
+    (last header)))
+
 
 (define status-list
   '(("??" :untracked)

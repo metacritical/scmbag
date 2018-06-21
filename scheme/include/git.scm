@@ -58,7 +58,7 @@
        (else (list status number file))))))
 
 (define (status-seperator number msg-list file)
-  (let [[stat-pair (cons number file)]]
+  (let [[stat-pair (list number file msg-list)]]
     (cond
      ((eq? (last msg-list) ':staged) (queue-add! staged stat-pair))
      ((eq? (last msg-list) ':unstaged) (queue-add! unstaged stat-pair))
@@ -66,15 +66,28 @@
      ((eq? (last msg-list) ':mod-staged) (queue-add! staged stat-pair)))))
 
 (define (show-status-files sym)
-  (let [[que (hash-table-ref sorted-status sym)]]
-    (print (queue->list que))))
+  (let [[queue (hash-table-ref sorted-status sym)]]
+    (if (queue-empty? queue)
+	""
+	(begin
+	  (print (color sym (get-header-msg sym)))
+	  (print (color sym line-seperator))
+	  (for-each
+	   (lambda [file] 
+	     (begin
+	       (print (color sym line-seperator) file)
+	       (print (color sym line-seperator))))
+	   (queue->list queue))))))
 
-(define (branch-status msg)
-  (print (string-append "# On branch: " (current-branch) " | " msg)))
+(define (branch-status count)
+  (print (string-append  
+	  (color ':line-sep line-seperator) 
+	  "On branch: " (current-branch) " | " count "\n"
+	  (color ':line-sep line-seperator))))
 
 (define (print-statuses) 
-  (let [[msg (number->string (hash-table-size status-hash))]]
-    (branch-status (color ':mod-staged (string-append "[+"msg"]")))
+  (let [[count (hash-table-size status-hash)]]
+    (branch-status (color ':mod-staged (format "[+~S]" count)))
     (show-status-files ':staged)
     (show-status-files ':unstaged)
     (show-status-files ':untracked)))
