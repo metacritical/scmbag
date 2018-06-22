@@ -1,20 +1,22 @@
 (define alias-header "echo \"#SCMBAG aliases\n")
 
 (define aliases
-"alias gs='scmbag -s'
-alias ga='scmbag -a'
-alias gd='scmbag -d'
+"
+alias scm='scmbag'
+alias gs='scm -s'
+alias ga='scm -a'
+alias gd='scm -d'
 alias gps='git push'
 alias gdc='git diff --cached'
 alias gc='git commit'
-alias gcm='scmbag -c'
-alias gcma='scmbag -m'
+alias gcm='scm -c'
+alias gcma='scm -m'
 alias gl='git log --graph'
 alias gg='git log --graph --decorate --oneline'
-alias grs='scmbag -r'
-alias gb='scmbag -b'
-alias gco='scmbag -o'
-alias rm='scmbag -x'")
+alias grs='scm -r'
+alias gb='scm -b'
+alias gco='scm -o'
+alias rm='scm -x'")
 
 (define alias-file "\"> ~/.scmbag")
 

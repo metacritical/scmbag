@@ -106,4 +106,7 @@
 ;; rm should be configurable through RM_CONFIRM=true or false or 0 /1 
 ;; if yes only then the confirm dialogue should appear other wise it
 ;; it shuould directly delete the specified file.
+;; git commit of a file in a range shows last n commits for a file in range n-m
+;;i.e 'git log --graph -L 1,10:scmbag.scm' shows first 10 commits for scmbag.scm
+
 
