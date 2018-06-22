@@ -64,9 +64,9 @@
 (define line-seperator "#       ")
 
 (define header-msg
-  '((:staged "▶  Changes to be committed")
-    (:unstaged "▶  Changes not staged for commit")
-    (:untracked "▶  Untracked files")))
+  '((:staged "➤ Changes to be committed")
+    (:unstaged "➤ Changes not staged for commit")
+    (:untracked "➤ Untracked files")))
 
 (define (get-header-msg sym)
   (let [[header (find-alist sym header-msg)]]
