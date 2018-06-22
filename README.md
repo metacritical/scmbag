@@ -25,3 +25,8 @@ gs
 ga  1
 ```
 <img src="https://i.imgur.com/yBAI1gd.png" title="source: imgur.com" />
+
+```bash
+rm 1
+```
+<img src="https://i.imgur.com/JMYfRDF.png" title="source: imgur.com" />
