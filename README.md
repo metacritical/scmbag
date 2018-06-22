@@ -14,4 +14,9 @@ Pronounced 'Scumbag', is a bag of shortcuts for source control management progra
 
 
 ## Usage
+
+##### git status
+```bash
+gs
+```
 <img src="https://i.imgur.com/DuhFUEw.png" title="source: imgur.com"/>
