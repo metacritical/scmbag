@@ -127,14 +127,14 @@
   (show-status))
 
 (define (diff file-names)
-  (system (format "git diff ~S" (string-join file-names " "))))
+  (system (format "git diff ~S" file-names)))
 
 (define (git-diff file-numbers)
   (cond
-   ((null? file-numbers) (diff file-numbers))
+   ((null? file-numbers) (diff "."))
    (else
     (set-status-hash (git-status))
-    (print (diff (map get-file-name file-numbers))))))
+    (diff (string-join (map get-file-name file-numbers) " ")))))
 
 (define (commit)
   (display "Commit Message: ")
