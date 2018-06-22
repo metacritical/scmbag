@@ -20,3 +20,8 @@ Pronounced 'Scumbag', is a bag of shortcuts for source control management progra
 gs
 ```
 <img src="https://i.imgur.com/DuhFUEw.png" title="source: imgur.com"/>
+
+```bash
+ga  1
+```
+<img src="https://i.imgur.com/yBAI1gd.png" title="source: imgur.com" />
