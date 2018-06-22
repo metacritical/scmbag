@@ -12,6 +12,21 @@ Because bash is relatively slower. and chicken scheme outputs compiled binaries 
 Pronounced 'Scumbag', is a bag of shortcuts for source control management program 'git'.
 
 
+## Installation/Compile
+
+Compile using chickem scheme. 
+```bash
+$ make
+Compiling scmbag
+csc scmbag.scm 
+Aliases already sourced into ~/.bash_profile
+
+Reload Bash (execute the following):
+$ source ~/.bash_profile
+Installing scmbag
+cp scmbag /usr/local/bin/
+
+```
 
 ## Usage
 
