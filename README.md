@@ -11,7 +11,7 @@ Because bash is relatively slower. and chicken scheme outputs compiled binaries 
 ### What does SCMBAG stand for ?
 Pronounced 'Scumbag', is a bag of shortcuts for source control management program 'git'.
 
-### How about SCMPUFF which is a solution written in mainstream language like 'golang' and not obscure like scheme?
+### How about SCMPUFF which is written in 'golang' and not obscure language like scheme?
 Scheme is Fast (Specifically chicken scheme takes half as much time as scmpuff).
 Heres a comparison :
 <img src="https://i.imgur.com/jFP9sub.png" title="source: imgur.com" />
