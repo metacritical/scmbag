@@ -13,7 +13,6 @@ Pronounced 'Scumbag', is a bag of shortcuts for source control management progra
 
 #### How about SCMPUFF which is written in 'golang' and not an obscure language like scheme?
 Scheme is Fast (Specifically chicken scheme takes half as much time as scmpuff).
-Heres a comparison :
 <img src="https://i.imgur.com/jFP9sub.png" title="source: imgur.com" />
 
 
