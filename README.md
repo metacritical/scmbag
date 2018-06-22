@@ -10,3 +10,8 @@ Because bash is relatively slower. and chicken scheme outputs compiled binaries 
 
 ### What does SCMBAG stand for ?
 Pronounced 'Scumbag', is a bag of shortcuts for source control management program 'git'.
+
+
+
+## Usage
+<img src="https://i.imgur.com/DuhFUEw.png" title="source: imgur.com"/>
