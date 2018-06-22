@@ -64,7 +64,7 @@
   (string-append (get-color ':esc)(get-color ':sep)(get-color name) msg
    (get-color ':esc)(get-color ':tail)))
 
-(define line-seperator "#       ")
+(define line-seperator "#    ")
 
 (define header-msg
   '((:staged "➤ Changes to be committed")
