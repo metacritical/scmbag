@@ -39,4 +39,5 @@ fi")
   ;;Prints required action.
   (print "Reload Bash (execute the following):\n$ source ~/.bash_profile"))
 
-
+(define (show-alias)
+  (print aliases))

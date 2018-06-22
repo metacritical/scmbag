@@ -39,6 +39,10 @@
     (commit-all))
 
    (args:make-option
+    (l show-alias) #:none "Show all aliases."
+    (show-alias))
+
+   (args:make-option
     (h help) #:none "Display this text"
     (usage))))
 
