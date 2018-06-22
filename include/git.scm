@@ -2,11 +2,11 @@
 
 (define sorted-status (make-hash-table))
 
-(define staged (make-queue))
+(define staged (make-hash-table))
 
-(define unstaged (make-queue))
+(define unstaged (make-hash-table))
 
-(define untracked (make-queue))
+(define untracked (make-hash-table))
 
 (hash-table-set! sorted-status ':staged staged)
 (hash-table-set! sorted-status ':unstaged unstaged)
@@ -47,7 +47,7 @@
 (define (set-status-hash status)
   (process-statuses (string-split status "\n")))
 
-(define (sort-status status-pair numb)
+(define (segregate-status status-pair numb)
   (let [[status (car status-pair)] [file (cdr status-pair)] 
 	[number (number->string numb)]]
     (let [[msg-list (find-alist status status-list)]]
@@ -56,39 +56,41 @@
        (else (list status number file))))))
 
 (define (status-seperator number msg-list file)
-  (let [[stat-pair (list number file msg-list)]]
+  (let [[stat-pair (list file msg-list)]
+	[numb (string->number number)]]
     (cond
-     ((eq? (last msg-list) ':staged) (queue-add! staged stat-pair))
-     ((eq? (last msg-list) ':unstaged) (queue-add! unstaged stat-pair))
-     ((eq? (last msg-list) ':untracked) (queue-add! untracked stat-pair))
-     ((eq? (last msg-list) ':mod-staged) (queue-add! staged stat-pair)))))
+     ((eq? (last msg-list) ':staged) 
+      (hash-table-set! staged numb stat-pair))
+     ((eq? (last msg-list) ':unstaged) 
+      (hash-table-set! unstaged numb stat-pair))
+     ((eq? (last msg-list) ':untracked) 
+      (hash-table-set! untracked numb stat-pair))
+     ((eq? (last msg-list) ':mod-staged) 
+      (hash-table-set! staged numb stat-pair)))))
 
-(define (process-queue queue sym)
-  (let [[qlist (reverse (queue->list queue))]]
+(define (process-sort-table sort-list sym)
+  (let [[keys (sort (hash-table-keys sort-list) <)]]
     (map
-     (lambda [item]
-       (let [[status (symbol->string (first (cdaddr item)))]
-	     [number (car item)]
-	     [file (color sym (cadr item))]
-	     [lbrace (color ':head " [")]
-	     [rbrace (color ':head "] ")]]
-	 (let [[msg (mod-stat status)]
-	       [stat (colorify status sym)]]
-	   (string-append stat ": " lbrace number rbrace file msg)))) qlist)))
-
+     (lambda [key]
+       (let [[stat-pair (hash-table-ref sort-list key)]]
+	 (let [[status (symbol->string (cadadr stat-pair))]
+	       [number (number->string key)]
+	       [file (color sym (car stat-pair))]
+	       [lbrace (color ':head " [")]
+	       [rbrace (color ':head "] ")]]
+	   (let [[msg (mod-stat status)]
+		 [stat (colorify status sym)]]
+	     (display (color sym line-seperator))
+	     (print (string-append stat ": " lbrace number rbrace file msg)))))) keys)))
 
 (define (show-status-files sym)
-  (let [[queue (hash-table-ref sorted-status sym)]]
-    (if (queue-empty? queue)
+  (let [[sort-table (hash-table-ref sorted-status sym)]]
+    (if (null? (hash-table-keys sort-table))
 	""
 	(begin
 	  (print (color sym (get-header-msg sym)))
 	  (print (color sym line-seperator))
-	  (for-each
-	   (lambda [file] 
-	     (begin
-	       (print (color sym line-seperator) file)))
-	   (process-queue queue sym))
+	  (process-sort-table sort-table sym)
 	  (print (color sym line-seperator))))))
 
 (define (branch-status count)
@@ -110,7 +112,7 @@
      ((string-null? status) (branch-status "Working directory clean"))
      (else
       (set-status-hash status)
-      (hash-table-walk status-hash (lambda [numb pair] (sort-status pair numb)))
+      (hash-table-walk status-hash (lambda [numb pair] (segregate-status pair numb)))
       (print-statuses)))))
 
 (define (add-file name)

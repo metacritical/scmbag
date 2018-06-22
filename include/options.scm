@@ -1,3 +1,5 @@
+(include "include/init.scm")
+
 (define cli-opts
   (list
    (args:make-option
@@ -86,9 +88,9 @@
 (define status-list
   '(("??" \ untracked :untracked)
     (" M" \ \ modified :unstaged)
-    ("M " \ \ modified :staged)
+    ("M " \ modified :staged)
     (" D" \ \ \ deleted :unstaged)
-    ("D " \ \ \ deleted :staged)
+    ("D " \ \ deleted :staged)
     ("R " \ \ renamed :staged)
     ("MM" mod-staged :mod-staged)))
 

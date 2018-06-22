@@ -1,7 +1,7 @@
-(define (init-aliases)
-;;Add aliases to ~/.scmbag
-  (system "echo \"#SCMBAG aliases
-alias gs='scmbag -s'
+(define alias-header "echo \"#SCMBAG aliases\n")
+
+(define aliases
+"alias gs='scmbag -s'
 alias ga='scmbag -a'
 alias gd='scmbag -d'
 alias gps='git push'
@@ -14,10 +14,12 @@ alias gg='git log --graph --decorate --oneline'
 alias grs='scmbag -r'
 alias gb='scmbag -b'
 alias gco='scmbag -o'
-alias rm='scmbag -x'\" > ~/.scmbag")
+alias rm='scmbag -x'")
 
-;; Append aliases to bash profile.
-  (system "if grep -Fxq '#SCMBAG' ~/.bash_profile
+(define alias-file "\"> ~/.scmbag")
+
+(define append-aliases
+  "if grep -Fxq '#SCMBAG' ~/.bash_profile
 then
 echo \"Aliases already sourced into ~/.bash_profile\n\"
 else
@@ -28,5 +30,11 @@ source ~/.scmbag\" >> ~/.bash_profile
 fi")
 
 
-;;Prints required action.
-(print "Reload Bash (execute the following):\n$ source ~/.bash_profile"))
+(define (init-aliases) 
+  (system (string-append "" alias-header aliases alias-file))
+  ;; Append aliases to bash profile.
+  (system append-aliases)
+  ;;Prints required action.
+  (print "Reload Bash (execute the following):\n$ source ~/.bash_profile"))
+
+
