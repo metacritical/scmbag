@@ -1,3 +1,4 @@
+<img src="https://i.imgur.com/FjXbLjk.pn" width="100">
 ![SCMBAG](https://i.imgur.com/FjXbLjk.png)
 
 # SCMBAG
