@@ -15,12 +15,10 @@
 (define (exec-system command)
   (call-with-input-pipe command read-all))
 
-(define (git-status)
-  (exec-system
-   "git status --short --untracked"))
+(define (git-status) (exec-system "git status --short --untracked"))
 
 (define (current-branch)
-  (let  [[branch (exec-system "git rev-parse --abbrev-ref HEAD")]]
+  (let [[branch (exec-system "git rev-parse --abbrev-ref HEAD")]]
     (cond
      ((string-null? branch) "")
      (else (first (string-split branch "\n"))))))
@@ -72,8 +70,8 @@
        (let [[status (symbol->string (first (cdaddr item)))]
 	     [number (car item)]
 	     [file (color sym (cadr item))]
-	     [lbrace (color ':line-sep " [")]
-	     [rbrace (color ':line-sep "] ")]]
+	     [lbrace (color ':head " [")]
+	     [rbrace (color ':head "] ")]]
 	 (let [[msg (mod-stat status)]
 	       [stat (colorify status sym)]]
 	   (string-append stat ": " lbrace number rbrace file msg)))) qlist)))
@@ -94,12 +92,13 @@
 	  (print (color sym line-seperator))))))
 
 (define (branch-status count)
-  (print (string-append (color ':line-sep "# ") "On branch: " (current-branch) " | " count)))
+  (string-append
+   (color ':head "# ") "On branch: " (current-branch) " | " count))
 
 (define (print-statuses) 
   (let [[count (hash-table-size status-hash)]]
-    (branch-status (color ':changes (format "[+~S]" count)))
-    (print (color ':line-sep line-seperator))
+    (print (branch-status (color ':changes (format "[+~S]" count))))
+    (print (color ':head line-seperator))
     (show-status-files ':staged)
     (show-status-files ':unstaged)
     (show-status-files ':untracked)))
