@@ -94,13 +94,11 @@
 	  (print (color sym line-seperator))))))
 
 (define (branch-status count)
-  (print (string-append  
-	  (color ':line-sep line-seperator) 
-	  "On branch: " (current-branch) " | " count)))
+  (print (string-append (color ':line-sep "# ") "On branch: " (current-branch) " | " count)))
 
 (define (print-statuses) 
   (let [[count (hash-table-size status-hash)]]
-    (branch-status (color ':mod-staged (format "[+~S]" count)))
+    (branch-status (color ':changes (format "[+~S]" count)))
     (print (color ':line-sep line-seperator))
     (show-status-files ':staged)
     (show-status-files ':unstaged)

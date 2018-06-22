@@ -49,6 +49,7 @@
    (:tail "m")
    (:staged "33m")
    (:deleted "31m")
+   (:changes "\x1b[38;5;93m")
    (:line-sep "37m")
    (:unstaged "32m")
    (:untracked "36m")
