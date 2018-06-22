@@ -1,4 +1,4 @@
-[SCMBAG](https://i.imgur.com/FjXbLjk.png)
+![SCMBAG](https://i.imgur.com/FjXbLjk.png)
 
 # SCMBAG
 SCMBag. (Git command shortcuts written in chicken scheme)
