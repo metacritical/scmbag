@@ -82,7 +82,6 @@
    ((string=? "   deleted" stat) (color ':deleted stat))
    (else (color sym stat))))
 
-
 (define status-list
   '(("??" \ untracked :untracked)
     (" M" \ \ modified :unstaged)
