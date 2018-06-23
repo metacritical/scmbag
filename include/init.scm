@@ -19,8 +19,6 @@ alias grm='scm -x'" > ~/.scmbag
 EOF
 )
 
-(define alias-file "\"")
-
 (define append-aliases #<<EOF
   if grep -Fxq '#SCMBAG' ~/.bash_profile
   then
@@ -32,13 +30,19 @@ EOF
 EOF
 )
 
+(define src-msg #<<EOF
+Reload Bash (execute the following):
+$ source ~/.bash_profile
+EOF
+)
+
 
 (define (init-aliases) 
   (system aliases)
   ;; Append aliases to bash profile.
   (system append-aliases)
   ;;Prints required action.
-  (print "Reload Bash (execute the following):\n$ source ~/.bash_profile"))
+  (print src-msg))
 
 (define (show-alias)
   (print aliases))
