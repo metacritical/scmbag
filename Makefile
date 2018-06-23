@@ -8,7 +8,7 @@ grab: compile install
 
 compile: scmbag.scm
 	@echo "Compiling scmbag"
-	$(CSC) $< 
+	$(CSC) -O5 -u -local -disable-interrupts -w -d0 -lfa2 $< 
 	@scmbag -i
 
 install:
