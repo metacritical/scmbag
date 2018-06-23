@@ -15,6 +15,9 @@ Pronounced 'Scumbag', is a bag of shortcuts for source control management progra
 Scheme is Fast (Specifically chicken scheme takes half as much time as scmpuff).
 <img src="https://i.imgur.com/jFP9sub.png" title="source: imgur.com" />
 
+#### Any other reason i should use SCMBAG instead of SCMBREEZE or SCMPUFF ?
+It works great on 'Monorepos', speed is its main advantage hands down beats the other two.
+
 
 ## Installation/Compile
 
