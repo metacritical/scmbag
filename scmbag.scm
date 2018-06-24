@@ -6,6 +6,7 @@
 (use args)
 (use loops)
 (use scsh-process)
+(include "include/init.scm")
 (include "include/options.scm")
 (include "include/git.scm")
 

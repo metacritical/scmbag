@@ -1,5 +1,3 @@
-(include "include/init.scm")
-
 (define cli-opts
   (list
    (args:make-option
