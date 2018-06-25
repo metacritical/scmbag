@@ -118,12 +118,27 @@
 (define (add-file name)
   (system (format "git add ~S" name)))
 
-(define (add-files file-numbers)
-  (set-status-hash (git-status))
+(define (range->number-list str)
+  (map (lambda (n) (string->number n))
+	(string-split-fields "\\d+" (car str))))
+
+(define (range->list str)
+  (let [[file-numb (range->number-list str)]]
+    (map (lambda (n) (number->string n)) 
+	 (range (first file-numb) (last file-numb)))))
+
+(define (add-file-from-list file-numbers) 
   (for-each 
    (lambda [number]
      (let [[file (get-file-name number)]]
-      (add-file file))) file-numbers)
+       (add-file file))) file-numbers))
+
+(define (add-files status-range)
+  (set-status-hash (git-status))
+  (if (string-search "-" (car status-range))
+      (let [[file-range (range->list status-range)]]
+	(add-file-from-list file-range))
+      (add-file-from-list status-range))
   (show-status))
 
 (define (diff file-names)

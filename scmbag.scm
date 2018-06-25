@@ -1,4 +1,5 @@
 (require-library extras ports data-structures srfi-13 files)
+(require-extension regex)
 (import (only extras printf))
 (import (only ports with-output-to-port))
 (import (only data-structures alist-ref string-split))
@@ -6,6 +7,7 @@
 (use args)
 (use loops)
 (use scsh-process)
+(include "include/util.scm")
 (include "include/init.scm")
 (include "include/options.scm")
 (include "include/git.scm")
