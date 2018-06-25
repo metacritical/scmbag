@@ -2,7 +2,7 @@
 
 build(){
   echo "Compiling SCMBAG ..."
-  csc  -O5 -u -local -disable-interrupts -w -d0 -lfa2 scmbag.scm 
+  csc -O1 -u -local -disable-interrupts -w -d0 -lfa2 scmbag.scm 
 }
 
 install(){
