@@ -47,6 +47,10 @@
 (define (set-status-hash status)
   (process-statuses (string-split status "\n")))
 
+(define (clear-and-reset-status-hash)
+  (hash-table-clear! status-hash)
+  (set-status-hash (git-status)))
+
 (define (segregate-status status-pair numb)
   (let [[status (car status-pair)] [file (cdr status-pair)] 
 	[number (number->string numb)]]
@@ -139,7 +143,7 @@
       (let [[file-range (range->list status-range)]]
 	(add-file-from-list file-range))
       (add-file-from-list status-range))
-  (set-status-hash (git-status))
+  (clear-and-reset-status-hash)
   (show-status))
 
 (define (diff file-names)
