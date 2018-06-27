@@ -1,3 +1,5 @@
+(define status (git-status))
+
 (define status-hash (make-hash-table))
 
 (define sorted-status (make-hash-table))
@@ -44,12 +46,12 @@
 	(hash-table-set! status-hash step (cons statcol file))
 	(set! step (+ step 1)))) statuses)))
 
-(define (set-status-hash status)
-  (process-statuses (string-split status "\n")))
+(define (set-status-hash)
+  (process-statuses (string-split (git-status) "\n")))
 
-(define (clear-and-reset-status-hash)
+(define (reset-status-hash)
   (hash-table-clear! status-hash)
-  (set-status-hash (git-status)))
+  (set-status-hash))
 
 (define (segregate-status status-pair numb)
   (let [[status (car status-pair)] [file (cdr status-pair)] 
@@ -111,13 +113,12 @@
     (show-status-files ':untracked)))
 
 (define (show-status)
-  (let [[status (git-status)]]
-    (cond
+  (cond
      ((string-null? status) (branch-status "Working directory clean"))
      (else
-      (set-status-hash status)
+      (set-status-hash)
       (hash-table-walk status-hash (lambda [numb pair] (segregate-status pair numb)))
-      (print-statuses)))))
+      (print-statuses))))
 
 (define (add-file name)
   (system (format "git add ~S" name)))
@@ -138,12 +139,12 @@
        (add-file file))) file-numbers))
 
 (define (add-files status-range)
-  (set-status-hash (git-status))
+  (set-status-hash)
   (if (string-search "-" (car status-range))
       (let [[file-range (range->list status-range)]]
 	(add-file-from-list file-range))
       (add-file-from-list status-range))
-  (clear-and-reset-status-hash)
+  (reset-status-hash)
   (show-status))
 
 (define (diff file-names)
@@ -153,7 +154,7 @@
   (cond
    ((null? file-numbers) (diff "."))
    (else
-    (set-status-hash (git-status))
+    (set-status-hash)
     (diff (string-join (map get-file-name file-numbers) " ")))))
 
 (define (commit)
@@ -169,14 +170,14 @@
       (system (string-append "git reset " files))))))
 
 (define (git-reset file-numbers)
-  (set-status-hash (git-status))
+  (set-status-hash)
   (unstage (map get-file-name file-numbers)))
 
 (define (checkout file)
   (system (format "git checkout ~S" file)))
 
 (define (git-checkout numbers)
-  (set-status-hash (git-status))
+  (set-status-hash)
   (let [[file-list (map get-file-name numbers)]]
     (checkout (string-join file-list " "))))
 
@@ -185,7 +186,7 @@
   (let [[reader (read-line)]]
     (cond
      ((string=? reader "Y")
-      (set-status-hash (git-status))
+      (set-status-hash)
       (let [[file-list (map get-file-name numbers)]]
 	(map delete-file* file-list))))))
 
