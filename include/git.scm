@@ -139,6 +139,7 @@
       (let [[file-range (range->list status-range)]]
 	(add-file-from-list file-range))
       (add-file-from-list status-range))
+  (set-status-hash (git-status))
   (show-status))
 
 (define (diff file-names)
