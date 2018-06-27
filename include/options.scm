@@ -90,6 +90,7 @@
 (define status-list
   '(("??" \ untracked :untracked)
     (" M" \ \ modified :unstaged)
+    ("A " \ new\ file :staged)
     ("M " \ modified :staged)
     (" D" \ \ \ deleted :unstaged)
     ("D " \ \ deleted :staged)
