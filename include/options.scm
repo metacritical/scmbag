@@ -41,6 +41,10 @@
     (show-alias))
 
    (args:make-option
+    (ignore) (required: "NUMBER") "Git Ignore"
+    (git-ignore))
+
+   (args:make-option
     (h help) #:none "Display this text"
     (usage))))
 

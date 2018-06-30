@@ -193,3 +193,6 @@
 (define (commit-all)
   (add-files (hash-table-keys status-hash))
   (commit))
+
+(define (git-ignore)
+  "git commit related code goes here ..")
