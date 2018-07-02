@@ -1,3 +1,5 @@
+(define (git-status) (exec-system "git status --short --untracked"))
+
 (define status (git-status))
 
 (define status-hash (make-hash-table))
@@ -16,8 +18,6 @@
 
 (define (exec-system command)
   (call-with-input-pipe command read-all))
-
-(define (git-status) (exec-system "git status --short --untracked"))
 
 (define (current-branch)
   (let [[branch (exec-system "git rev-parse --abbrev-ref HEAD")]]
@@ -74,6 +74,10 @@
      ((eq? (last msg-list) ':mod-staged) 
       (hash-table-set! staged numb stat-pair)))))
 
+(define (sort-status-hash)
+  (hash-table-walk
+   status-hash (lambda [numb pair] (segregate-status pair numb))))
+
 (define (process-sort-table sort-list sym)
   (let [[keys (sort (hash-table-keys sort-list) <)]]
     (map
@@ -117,7 +121,7 @@
      ((string-null? status) (branch-status "Working directory clean"))
      (else
       (set-status-hash)
-      (hash-table-walk status-hash (lambda [numb pair] (segregate-status pair numb)))
+      (sort-status-hash)
       (print-statuses))))
 
 (define (add-file name)
@@ -194,5 +198,30 @@
   (add-files (hash-table-keys status-hash))
   (commit))
 
-(define (git-ignore)
-  "git commit related code goes here ..")
+(define (get-untracked-file file-number)
+  (car (hash-table-ref untracked (string->number file-number))))
+
+(define (ignored-files file-number)
+  (let [[file-name (get-untracked-file file-number)]]
+   file-name))
+
+(define (append-file-to-ignore-list file-number)
+  (let [[file-name (ignored-files file-number)]]
+    (system (format "echo ~S >> .gitignore" file-name))
+    (display (format "~S added to .gitignore\n" file-name))))
+
+(define (append-to status-range)
+  (let loop [(stat-range status-range)]
+    (if (not (null? stat-range))
+	(begin
+	  (append-file-to-ignore-list (car stat-range))
+	  (loop (cdr stat-range))))))
+
+(define (git-ignore status-range)
+  (set-status-hash)
+  (sort-status-hash)
+  (if (string-search "-" (car status-range))
+      ;;check if any numbers in range exist in untracked list.
+      (let [[file-range (range->list status-range)]]
+	(append-to file-range))
+      (append-to status-range)))

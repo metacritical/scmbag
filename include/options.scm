@@ -42,7 +42,7 @@
 
    (args:make-option
     (ignore) (required: "NUMBER") "Git Ignore"
-    (git-ignore))
+    (git-ignore (cdr (command-line-arguments))))
 
    (args:make-option
     (h help) #:none "Display this text"
@@ -102,6 +102,7 @@
     ("MM" mod-staged :mod-staged)))
 
 ;;TODO 
+;; Add files to gitignore through file ranges 1-4 
 ;; Ability to specify files status in range 1-4 2-3 4-6
 ;; Git branch using gb
 ;; Git branch gb shows all numbered branches and if given a

@@ -12,6 +12,7 @@ install(){
 
 if [ -z "${1+x}" ]; then
   build
+  install
 else
   case "$1" in
     "scmbag")
@@ -20,8 +21,13 @@ else
     "install")
       install
       ;;
-    *)
-      echo "Give some flag .."
+    "-h")
+      printf "Usage: ./build.sh [COMMAND]\n\n"
+      cat <<EOF
+Commands :
+  build    Build scmbag
+install    Install scmbag
+EOF
       ;;
   esac
 fi

@@ -16,7 +16,8 @@ alias gg='git log --graph --decorate --oneline'
 alias grs='scm -r'
 alias gb='scm -b'
 alias gco='scm -o'
-alias grm='scm -x'" > ~/.scmbag
+alias grm='scm -x'
+alias gi='scm --ignore'" > ~/.scmbag
 EOF
 )
 
