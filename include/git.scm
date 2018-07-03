@@ -20,10 +20,10 @@
   (call-with-input-pipe command read-all))
 
 (define (current-branch)
-  (let [[branch (exec-system "git rev-parse --abbrev-ref HEAD")]]
+  (let ([branch (exec-system "git rev-parse --abbrev-ref HEAD")])
     (cond
-     ((string-null? branch) "")
-     (else (first (string-split branch "\n"))))))
+     [(string-null? branch) ""]
+     [else (first (string-split branch "\n"))])))
 
 (define (staged-files?)
   (not (string-null? (exec-system "git diff --cached --name-status"))))
@@ -41,8 +41,8 @@
   (let [[step 1]] 
     (for-each 
      (lambda [file-status]
-       (let [[statcol (substring file-status 0 2)]
-	     [file (substring file-status 3 (string-length file-status))]]
+       (let ([statcol (substring file-status 0 2)]
+	     [file (substring file-status 3 (string-length file-status))])
 	(hash-table-set! status-hash step (cons statcol file))
 	(set! step (+ step 1)))) statuses)))
 
@@ -54,25 +54,20 @@
   (set-status-hash))
 
 (define (segregate-status status-pair numb)
-  (let [[status (car status-pair)] [file (cdr status-pair)] 
-	[number (number->string numb)]]
-    (let [[msg-list (find-alist status status-list)]]
+  (let ([status (car status-pair)] [file (cdr status-pair)] [number (number->string numb)])
+    (let ([msg-list (find-alist status status-list)])
       (cond
-       ((list? msg-list) (status-seperator number msg-list file))
-       (else (list status number file))))))
+       [(list? msg-list) (status-seperator number msg-list file)]
+       [else (list status number file)]))))
 
-(define (status-seperator number msg-list file)
-  (let [[stat-pair (list file msg-list)]
+(define (set-sorted-status key numb stat-pair)
+  (let ([stage-hash (hash-table-ref sorted-status key)])
+     (hash-table-set! stage-hash numb stat-pair)))
+
+(define (status-seperator number msg file)
+  (let [[stat-pair (list file msg)]
 	[numb (string->number number)]]
-    (cond
-     ((eq? (last msg-list) ':staged) 
-      (hash-table-set! staged numb stat-pair))
-     ((eq? (last msg-list) ':unstaged) 
-      (hash-table-set! unstaged numb stat-pair))
-     ((eq? (last msg-list) ':untracked) 
-      (hash-table-set! untracked numb stat-pair))
-     ((eq? (last msg-list) ':mod-staged) 
-      (hash-table-set! staged numb stat-pair)))))
+    (set-sorted-status (last msg) numb stat-pair)))
 
 (define (sort-status-hash)
   (hash-table-walk
