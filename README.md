@@ -21,11 +21,13 @@ It works great on 'Monorepos', speed is its main advantage hands down beats the 
 
 ## Installation/Compile
 
-Compile using chickem scheme. 
+Compile using chicken scheme. 
 ```bash
-$ make
-Compiling scmbag
-csc scmbag.scm 
+$ chicken-install
+retrieving ...                                                                                                                                                                    
+checking platform for `scmbag' ...                                                                                                                                                
+checking dependencies for `scmbag' ...      
+$ scmbag/scmbag -i
 Aliases already sourced into ~/.bash_profile
 
 Reload Bash (execute the following):

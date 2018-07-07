@@ -2,7 +2,7 @@
 
 build(){
   echo "Compiling SCMBAG ..."
-  csc -O1 -u -local -disable-interrupts -w -d0 -lfa2 scmbag.scm 
+  chicken-install -prefix $PWD/scmbag -deploy regex loops args scsh-process
 }
 
 install(){
@@ -12,7 +12,6 @@ install(){
 
 if [ -z "${1+x}" ]; then
   build
-  install
 else
   case "$1" in
     "scmbag")

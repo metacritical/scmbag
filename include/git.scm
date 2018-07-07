@@ -1,3 +1,6 @@
+(define (exec-system command)
+  (call-with-input-pipe command read-all))
+
 (define (git-status) (exec-system "git status --short --untracked"))
 
 (define status (git-status))
@@ -15,9 +18,6 @@
 (hash-table-set! sorted-status ':staged staged)
 (hash-table-set! sorted-status ':unstaged unstaged)
 (hash-table-set! sorted-status ':untracked untracked)
-
-(define (exec-system command)
-  (call-with-input-pipe command read-all))
 
 (define (current-branch)
   (let ([branch (exec-system "git rev-parse --abbrev-ref HEAD")])
