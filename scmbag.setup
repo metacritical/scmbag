@@ -1,6 +1,5 @@
 (system "rm -rf scmbag")
 (system "chicken-install -prefix $PWD/scmbag -deploy regex loops args scsh-process")
 (compile -deploy -d0 scmbag.scm)
-(system "echo \n#SCMBAG PATH >> ~/.scmbag")	 
-(system "echo 'alias scm='/usr/local/Cellar/chicken/4.13.0/bin/scmbag/scmbag' >> ~/.scmbag")
-(install-program 'scmbag "scmbag/" '((version "0.1")))
+(system "mv scmbag /usr/local/share/scmbag")
+(system "/usr/local/share/scmbag/scmbag -i")

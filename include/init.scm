@@ -1,7 +1,7 @@
 (define aliases #<<EOF
 echo "#SCMBAG aliases
 
-alias scm='scmbag'
+alias scm='/usr/local/share/scmbag/scmbag'
 alias gs='scm -s'
 alias ga='scm -a'
 alias gd='scm -d'
