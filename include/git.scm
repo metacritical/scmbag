@@ -1,18 +1,12 @@
 (define (exec-system command)
   (call-with-input-pipe command read-all))
 
-(define (git-status) (exec-system "git status --short --untracked"))
-
-(define status (git-status))
-
+(define (git-status)
+  (exec-system "git status --short --untracked"))
 (define status-hash (make-hash-table))
-
 (define sorted-status (make-hash-table))
-
 (define staged (make-hash-table))
-
 (define unstaged (make-hash-table))
-
 (define untracked (make-hash-table))
 
 (hash-table-set! sorted-status ':staged staged)
@@ -113,7 +107,7 @@
 
 (define (show-status)
   (cond
-     ((string-null? status) (branch-status "Working directory clean"))
+     ((string-null? (git-status)) (branch-status "Working directory clean"))
      (else
       (set-status-hash)
       (sort-status-hash)
