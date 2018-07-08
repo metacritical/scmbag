@@ -1,6 +1,6 @@
 (run (rm -rf scmbag))
 (run (chicken-install -prefix $PWD/scmbag -deploy regex loops args scsh-process))
-(compile -deploy -d0 scmbag.scm)
+(compile -deploy -d1 scmbag.scm)
 (run (rm -rf /usr/local/share/scmbag))
-(run (mv scmbag /usr/local/share/scmbag))
+(run (cp -r scmbag /usr/local/share/scmbag))
 (run (/usr/local/share/scmbag/scmbag -i))
