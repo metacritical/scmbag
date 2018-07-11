@@ -7,7 +7,11 @@ build(){
 
 install(){
   echo "Installing scmbag"
-  cp scmbag /usr/local/bin/
+  rm -rf /usr/local/share/scmbag
+  cp -r scmbag /usr/local/share/scmbag
+  mkdir -p /usr/local/opt/chicken/lib/
+  ln -sf /usr/local/share/scmbag/libchicken.dylib /usr/local/opt/chicken/lib/
+  /usr/local/share/scmbag/scmbag -i
 }
 
 if [ -z "${1+x}" ]; then

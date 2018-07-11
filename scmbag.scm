@@ -1,5 +1,5 @@
 (require-library extras ports data-structures srfi-13 files)
-(require-extension regex loops scsh-process args)
+(require-extension loops scsh-process args regex)
 (import (only extras printf))
 (import (only ports with-output-to-port))
 (import (only data-structures alist-ref string-split))
