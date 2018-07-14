@@ -12,13 +12,5 @@
 (include "include/options.scm")
 (include "include/git.scm")
 
-(define (usage)
-  (with-output-to-port (current-error-port)
-    (lambda ()
-      (print "Usage: " (car (argv)) " [options...] [files...]")
-      (newline)
-      (print (args:usage cli-opts))))
-  (exit 1))
-
 (receive (options operands)
     (args:parse (command-line-arguments) cli-opts) "")

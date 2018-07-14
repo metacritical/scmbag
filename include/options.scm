@@ -48,6 +48,14 @@
     (h help) #:none "Display this text"
     (usage))))
 
+(define (usage)
+  (with-output-to-port (current-error-port)
+    (lambda ()
+      (print "Usage: " (car (argv)) " [options...] [files...]")
+      (newline)
+      (print (args:usage cli-opts))))
+  (exit 1))
+
 (define (find-alist sym alist)
   (find (lambda (id) (member sym id)) alist))
 
@@ -102,8 +110,10 @@
     ("MM" mod-staged :mod-staged)))
 
 ;;TODO 
+;; Move this todo to markdown checklist todo.
 ;; Add files to gitignore through file ranges 1-4 
 ;; Ability to specify files status in range 1-4 2-3 4-6
+;; Git checkout branch using gcob branch number aswell as gco 'branch-name'
 ;; Git branch using gb
 ;; Git branch gb shows all numbered branches and if given a
 ;; option i.e 'gb new_branch' should create a new branch.
