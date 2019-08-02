@@ -167,7 +167,7 @@
       (set-status-hash)
       (sort-status-hash)
       (print-statuses)]
-     [(branch-status "Working directory clean")]))
+     [(branch-status "Working directory clean\n")]))
 
 (define (add-file name)
   (system (format "git add ~S" name)))
