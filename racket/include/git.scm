@@ -142,7 +142,7 @@
     ;; (displayln sym)
     ;; (displayln (hash-ref sorted-status sym))
     (cond 
-     [(not (hash-empty? sort-table))
+     [(not (hash-values sort-table))
       (begin
 	(display (color sym (last (get-header-msg sym))))
 	(display (color sym line-seperator))
