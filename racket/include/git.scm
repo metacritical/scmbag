@@ -140,7 +140,7 @@
 (define (show-status-files sym)
   (let [[sort-table (hash-ref sorted-status sym)]]
     (cond 
-     [(hash-values sort-table)
+     [(not (hash-empty? sort-table))
       (begin
 	(display (color sym (last (get-header-msg sym))))
 	(display (color sym line-seperator))
@@ -158,8 +158,7 @@
     (display (string-append (color "head" line-seperator) "\n"))
     (show-status-files "staged")
     (show-status-files "unstaged")
-    (show-status-files "untracked")
-    ))
+    (show-status-files "untracked")))
 
 (define (show-status)
   (cond

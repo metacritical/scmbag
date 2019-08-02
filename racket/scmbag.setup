@@ -1,4 +1,0 @@
-(run (rm -rf scmbag))
-(run (chicken-install -prefix $PWD/scmbag -deploy regex loops args scsh-process))
-(compile -deploy -d2 scmbag.scm)
-(run (sh build.sh install))
