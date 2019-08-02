@@ -1,0 +1,6 @@
+((license "MIT")
+ (category tools)
+ (needs regex args loops scsh-process)
+ (test-depends test)
+ (author "Pankaj Doharey a.k.a Metacritical")
+ (synopsis "SCMBAG - Git SCM Shortcuts."))

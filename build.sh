@@ -2,7 +2,7 @@
 
 build(){
   echo "Compiling SCMBAG ..."
-  chicken-install -prefix $PWD/scmbag -deploy regex loops args scsh-process
+  chicken-install args scsh-process srfi-69
 }
 
 install(){
@@ -10,7 +10,7 @@ install(){
   rm -rf /usr/local/share/scmbag
   cp -r scmbag /usr/local/share/scmbag
   mkdir -p /usr/local/opt/chicken/lib/
-  ln -sf /usr/local/share/scmbag/libchicken.dylib /usr/local/opt/chicken/lib/
+  #ln -sf /usr/local/share/scmbag/libchicken.dylib /usr/local/opt/chicken/lib/
   /usr/local/share/scmbag/scmbag -i
 }
 
