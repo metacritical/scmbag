@@ -139,8 +139,6 @@
 
 (define (show-status-files sym)
   (let [[sort-table (hash-ref sorted-status sym)]]
-    ;; (displayln sym)
-    ;; (displayln (hash-ref sorted-status sym))
     (cond 
      [(hash-values sort-table)
       (begin
@@ -169,7 +167,7 @@
       (set-status-hash)
       (sort-status-hash)
       (print-statuses)]
-     (branch-status "Working directory clean")))
+     [(branch-status "Working directory clean")]))
 
 (define (add-file name)
   (system (format "git add ~S" name)))
