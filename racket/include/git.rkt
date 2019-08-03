@@ -186,7 +186,6 @@
      (let [[file (get-file-name number)]]
        (add-file file))) file-numbers))
 
-
 (define (add-files status-range)
   (set-status-hash)
   (for [[n status-range]]
