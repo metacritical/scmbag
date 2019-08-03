@@ -173,7 +173,7 @@
 
 (define (range->number-list str)
   (map (lambda (n) (string->number n))
-	(string-split "\\d+" (car str))))
+	(string-split (vector-ref str 0) #px"\\-")))
 
 (define (range->list str)
   (let [[file-numb (range->number-list str)]]
@@ -186,13 +186,15 @@
      (let [[file (get-file-name number)]]
        (add-file file))) file-numbers))
 
+
 (define (add-files status-range)
   (set-status-hash)
-  (if (string-contains? "-" (car status-range))
-      (let [[file-range (range->list status-range)]]
-	(add-file-from-list file-range))
-      (add-file-from-list status-range))
-  (reset-status-hash)
+  (for [[n status-range]]
+    (if (string-contains? n "-")
+	(let [[file-range (range->list status-range)]]
+	  (add-file-from-list file-range))
+	(add-file (get-file-name n))))
+    (reset-status-hash)
   (show-status))
 
 (define (diff file-names)

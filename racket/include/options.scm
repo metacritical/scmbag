@@ -1,15 +1,13 @@
-(define link-numb (make-parameter null))
-
 (define cli-opts
-  (command-line
-   #:program "SCMBAG"
-   #:once-each 
-    [("-s" "--status") "Show Status"
-     (show-status)]
+  (let* [[args (current-command-line-arguments)]
+	 [flag (vector-ref args 0)]
+	 [flag-args (vector-drop args 1)]]
   
-    [("-a" "--add") numb "Add Files 1 2 3 .."
-     (add-files (cons numb (link-numb)))]
+    (case flag
+      [(or "-s" "--status") (show-status)]
+      [(or "-a" "--add") (add-files flag-args)])
 
+   
    ;; (args:make-option
    ;;  (i install) #:none "Create aliases and source into ~/.bash_profile"
    ;;  (init-aliases))
@@ -49,7 +47,7 @@
    ;; (args:make-option
    ;;  (h help) #:none "Display this text"
    ;;  (usage))
-   ))
+    ))
 
 ;; (define (usage)
   ;; (display (current-error-port)
