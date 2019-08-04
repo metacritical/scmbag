@@ -201,9 +201,9 @@
 
 (define (git-diff file-numbers)
   (cond
-   [(null? file-numbers) (diff ".")]
+   [(eq? 0 (vector-length file-numbers)) (diff ".")]
    [(set-status-hash)
-    (diff (string-join (map get-file-name file-numbers) " "))]))
+    (diff (string-join (map get-file-name (vector->list file-numbers)) " "))]))
 
 (define (commit)
   (display "Commit Message: ")

@@ -5,7 +5,8 @@
   
     (case flag
       [(or "-s" "--status") (show-status)]
-      [(or "-a" "--add") (add-files flag-args)])
+      [(or "-a" "--add") (add-files flag-args)]
+      [(or "-d" "--diff") (git-diff flag-args)])
 
    
    ;; (args:make-option
