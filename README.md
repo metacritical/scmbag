@@ -3,7 +3,7 @@
 # SCMBAG
 > SCMBag. (Git command shortcuts written in racket)
 
-### A scm-breeze inspired git command shortcut program written in chicken scheme.
+### A scm-breeze inspired git command shortcut program written in Racket.
 
 #### Why Racket ? 
 Because bash is relatively slower. and racket seems not to have breaking changes, the program was earlier written in chicken scheme
@@ -13,7 +13,7 @@ which you can still find in archive but it was breaking with latest chicken, whi
 Pronounced 'Scumbag', is a bag of shortcuts for source control management program 'git'.
 
 #### How about SCMPUFF which is written in 'golang' and not an obscure language like scheme?
-Scheme is Fast (Specifically chicken scheme takes half as much time as scmpuff).
+Scheme is Fast (Specifically chicken scheme takes half as much time as scmpuff), the current version on racket is little slower than chicken.
 <img src="https://i.imgur.com/jFP9sub.png" title="source: imgur.com" />
 But unfortunately chicken compiler introduces breakign stuff so we have to resort to mediocre path to portability.
 
