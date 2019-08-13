@@ -225,8 +225,9 @@
 
 (define (git-checkout numbers)
   (set-status-hash)
-  (let [[file-list (map get-file-name numbers)]]
-    (checkout (string-join file-list " "))))
+  (let [[file-list (map get-file-name (vector->list numbers))]]
+    (checkout (string-join file-list " ")))
+  )
 
 (define (rm-files numbers)
   (display "Are you sure you want to delete files [Y/n] ? : ")
