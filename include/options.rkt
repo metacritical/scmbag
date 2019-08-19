@@ -7,7 +7,8 @@
       [(or "-s" "--status") (show-status)]
       [(or "-a" "--add") (add-files flag-args)]
       [(or "-d" "--diff") (git-diff flag-args)]
-      [(or "-o" "--checkout") (git-checkout flag-args)])
+      [(or "-o" "--checkout") (git-checkout flag-args)]
+      [(or "-c" "--commit-msg") (commit)])
 
    
    ;; (args:make-option
