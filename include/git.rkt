@@ -220,7 +220,7 @@
 
 (define (git-reset file-numbers)
   (set-status-hash)
-  (unstage (map get-file-name file-numbers)))
+  (unstage (map get-file-name (vector->list file-numbers))))
 
 (define (checkout file)
   (system (format "git checkout ~S" file)))
