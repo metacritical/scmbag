@@ -76,7 +76,7 @@
   (non-empty-string? (exec-system "git diff --cached --name-status")))
 
 (define (get-file-status-and-name number)
-  (hash-ref status-hash (string->number number)))
+  (hash-ref status-hash number))
 
 (define (get-file-status number)
   (car (get-file-status-and-name number)))
@@ -180,21 +180,23 @@
     (map (lambda (n) (number->string n)) 
 	 (range (first file-numb) (last file-numb)))))
 
-(define (add-file-from-list file-numbers) 
+(define (add-file-from-list file-numbers)
   (for-each 
    (lambda [number]
-     (let [[file (get-file-name number)]]
-       (add-file file))) file-numbers))
+     (if (string? number)
+	 (let [[file (get-file-name (string->number number))]]
+	   (add-file file))
+	 (add-file (get-file-name number)))) file-numbers))
 
 (define (add-files status-range)
   (set-status-hash)
   (for [[n status-range]]
     (if (string-contains? n "-")
-	(let [[file-range (range->list status-range)]]
-	  (add-file-from-list file-range))
-	(add-file (get-file-name n))))
-    (reset-status-hash)
-  (show-status))
+	(let [[file-list (range->list status-range)]]
+	  (add-file-from-list file-list))
+	(add-file-from-list (vector->list status-range))))
+   (reset-status-hash)
+   (show-status))
 
 (define (diff file-names)
   (system (format "git diff ~S" file-names)))
@@ -226,8 +228,7 @@
 (define (git-checkout numbers)
   (set-status-hash)
   (let [[file-list (map get-file-name (vector->list numbers))]]
-    (checkout (string-join file-list " ")))
-  )
+    (checkout (string-join file-list " "))))
 
 (define (rm-files numbers)
   (display "Are you sure you want to delete files [Y/n] ? : ")
@@ -239,7 +240,9 @@
 	(map delete-file file-list))))))
 
 (define (commit-all)
-  (add-files (hash-keys status-hash))
+  (set-status-hash)
+  (add-file-from-list (hash-keys status-hash))
+  (show-status)
   (commit))
 
 (define (get-untracked-file file-number)

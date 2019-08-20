@@ -8,26 +8,27 @@
       [(or "-a" "--add") (add-files flag-args)]
       [(or "-d" "--diff") (git-diff flag-args)]
       [(or "-o" "--checkout") (git-checkout flag-args)]
-      [(or "-c" "--commit-msg") (commit)])
+      [(or "-c" "--commit-msg") (commit)]
+      [(or "-m" "--commit-all") (commit-all)])
 
    
-   ;; (args:make-option
+   ;; (args:make-option ;;DONE
    ;;  (i install) #:none "Create aliases and source into ~/.bash_profile"
    ;;  (init-aliases))
 
-   ;; (args:make-option
+   ;; (args:make-option ;;DONE
    ;;  (d diff) #:none "Git diff 1 3 4 .."
    ;;  (git-diff (cdr (command-line-arguments))))
 
-   ;; (args:make-option
+   ;; (args:make-option ;;Done
    ;;  (c commit-msg) #:none "Commit with message."
    ;;  (commit))
 
-   ;; (args:make-option
+   ;; (args:make-option ;;Done
    ;;  (r reset) #:none "Git reset 1 3 4 .."
    ;;  (git-reset (cdr (command-line-arguments))))
 
-   ;; (args:make-option
+   ;; (args:make-option ;;Done
    ;;  (o checkout) (required: "NUMBERS")     "Git checkout .."
    ;;  (git-checkout (cdr (command-line-arguments))))
 
