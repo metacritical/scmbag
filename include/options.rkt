@@ -3,8 +3,6 @@
          (unless (vector-empty? args)
                  (let* [[flag (vector-ref args 0)]
                         [flag-args (vector-drop args 1)]]
-
-                   
        (case flag
          [(or "-s" "--status") (show-status)]
          [(or "-a" "--add") (add-files flag-args)]
