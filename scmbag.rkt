@@ -1,7 +1,5 @@
 #!/usr/local/bin/racket
 #lang racket
-(require racket/system)
-
 
 (include "include/util.rkt")
 (include "include/init.rkt")
