@@ -1,17 +1,17 @@
 (define cli-opts
-  (let* [[args (current-command-line-arguments)]]
-         (unless (vector-empty? args)
-                 (let* [[flag (vector-ref args 0)]
-                        [flag-args (vector-drop args 1)]]
-       (case flag
-         [(or "-s" "--status") (show-status)]
-         [(or "-a" "--add") (add-files flag-args)]
-         [(or "-d" "--diff") (git-diff flag-args)]
-         [(or "-o" "--checkout") (git-checkout flag-args)]
-         [(or "-c" "--commit-msg") (commit)]
-         [(or "-m" "--commit-all") (commit-all)]
-         [(or "-r" "--reset") (git-reset flag-args)])
-       
+  (unless (vector-empty? (current-command-line-arguments))
+          (let* [[args (current-command-line-arguments)]
+                 [flag (vector-ref args 0)]
+                 [flag-args (vector-drop args 1)]]
+            (case flag
+              [(or "-s" "--status") (show-status)]
+              [(or "-a" "--add") (add-files flag-args)]
+              [(or "-d" "--diff") (git-diff flag-args)]
+              [(or "-o" "--checkout") (git-checkout flag-args)]
+              [(or "-c" "--commit-msg") (commit)]
+              [(or "-m" "--commit-all") (commit-all)]
+              [(or "-r" "--reset") (git-reset flag-args)])
+
        ;; (args:make-option ;;DONE
        ;;  (i install) #:none "Create aliases and source into ~/.bash_profile"
        ;;  (init-aliases))
@@ -51,7 +51,7 @@
        ;; (args:make-option
        ;;  (h help) #:none "Display this text"
        ;;  (usage))
-       ))))
+       )))
 
 ;; (define (usage)
   ;; (display (current-error-port)
