@@ -1,4 +1,4 @@
-<img src="https://i.imgur.com/ro2uIXv.png" width="200" />
+<img style="background-color: #cccccc;" src="https://i.imgur.com/ro2uIXv.png" width="200" />
 
 # SCMBAG
 > SCMBag. (Git command shortcuts written in racket)
